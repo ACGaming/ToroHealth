@@ -1,7 +1,5 @@
 package net.torocraft.torohealth;
 
-import java.util.List;
-import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
@@ -21,6 +19,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.torocraft.torohealth.config.ConfigurationHandler;
 import net.torocraft.torohealth.gui.GuiEntityStatus;
 import net.torocraft.torohealth.render.DamageParticle;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ClientProxy extends CommonProxy {
 
@@ -57,7 +58,10 @@ public class ClientProxy extends CommonProxy {
       int entityHealth = ((NBTTagInt) entity.getEntityData().getTag("health")).getInt();
 
       if (entityHealth != currentHealth) {
-        displayParticle(entity, entityHealth - currentHealth);
+        float range = ConfigurationHandler.displayRange;
+        if (range <= 0F || entity.getDistanceSq(Minecraft.getMinecraft().getRenderViewEntity()) <= range * range) {
+          displayParticle(entity, entityHealth - currentHealth);
+        }
       }
     }
 

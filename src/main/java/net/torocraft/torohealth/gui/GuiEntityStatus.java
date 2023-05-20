@@ -11,11 +11,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.torocraft.torohealth.ToroHealth;
 import net.torocraft.torohealth.config.ConfigurationHandler;
-import net.torocraft.torohealth.display.BarDisplay;
-import net.torocraft.torohealth.display.EntityDisplay;
-import net.torocraft.torohealth.display.HeartsDisplay;
-import net.torocraft.torohealth.display.NumericDisplay;
-import net.torocraft.torohealth.display.ToroHealthDisplay;
+import net.torocraft.torohealth.display.*;
 
 public class GuiEntityStatus extends Gui {
 
@@ -59,10 +55,24 @@ public class GuiEntityStatus extends Gui {
     if (!showHealthBar || event.getType() != ElementType.CHAT) {
       return;
     }
+
     updateGuiAge();
+
+    if (!checkRange()) {
+      return;
+    }
+
     updatePositions();
     drawSkin();
     draw();
+  }
+
+  private boolean checkRange() {
+    if (entity == null) {
+      return false;
+    }
+    Float range = ConfigurationHandler.displayRange;
+    return range <= 0F || entity.getDistanceSq(Minecraft.getMinecraft().getRenderViewEntity()) <= range * range;
   }
 
   private void drawSkin() {

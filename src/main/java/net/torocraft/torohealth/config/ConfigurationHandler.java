@@ -1,10 +1,11 @@
 package net.torocraft.torohealth.config;
 
-import java.io.File;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.torocraft.torohealth.ToroHealth;
+
+import java.io.File;
 
 public class ConfigurationHandler {
 
@@ -19,6 +20,7 @@ public class ConfigurationHandler {
   public static Integer statusDisplayY;
   public static Integer damageColor;
   public static Integer healColor;
+  public static Float displayRange;
   public static int hideDelay;
 
   private static String[] acceptedColors = new String[]{"RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "WHITE", "BLACK", "PURPLE"};
@@ -41,6 +43,7 @@ public class ConfigurationHandler {
       showDamageParticles = config.getBoolean("Show Damage Particles", Configuration.CATEGORY_CLIENT, true, "Show Damage Indicators");
       healColor = mapColor(config.getString("Heal Color", Configuration.CATEGORY_CLIENT, "GREEN", "Heal Text Color", acceptedColors));
       damageColor = mapColor(config.getString("Damage Color", Configuration.CATEGORY_CLIENT, "RED", "Damage Text Color", acceptedColors));
+      displayRange = config.getFloat("Display Range", Configuration.CATEGORY_CLIENT, 50F, 0F, Float.MAX_VALUE, "The maximum range for entity information displays");
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
