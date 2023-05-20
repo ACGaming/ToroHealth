@@ -1,6 +1,7 @@
 package net.torocraft.torohealth.gui;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.BossInfoClient;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,6 +13,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.torocraft.torohealth.ToroHealth;
 import net.torocraft.torohealth.config.ConfigurationHandler;
 import net.torocraft.torohealth.display.*;
+
+import java.util.Map;
+import java.util.UUID;
 
 public class GuiEntityStatus extends Gui {
 
@@ -60,6 +64,17 @@ public class GuiEntityStatus extends Gui {
 
     if (!checkRange()) {
       return;
+    }
+
+    if (!ConfigurationHandler.showBosses) {
+      Map<UUID, BossInfoClient> bossMap = Minecraft.getMinecraft().ingameGUI.getBossOverlay().mapBossInfos;
+      if (!bossMap.isEmpty()) {
+        for (Map.Entry<UUID, BossInfoClient> entry : bossMap.entrySet()) {
+          if (entity.getDisplayName().getUnformattedText().equals(entry.getValue().getName().getUnformattedText())) {
+            return;
+          }
+        }
+      }
     }
 
     updatePositions();

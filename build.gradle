@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.12.2-12"
+version = "1.12.2-13"
 group = "net.torocraft.torohealth"
 archivesBaseName = "torohealth"
 
@@ -22,6 +22,12 @@ minecraft {
     version = "1.12.2-14.23.5.2847"
     runDir = "run"
     mappings = "snapshot_20171003"
+}
+
+jar {
+    manifest {
+        attributes 'FMLAT': 'torohealth_at.cfg'
+    }
 }
 
 dependencies {
@@ -40,4 +46,6 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+
+    rename '(.+_at.cfg)', 'META-INF/$1'
 }

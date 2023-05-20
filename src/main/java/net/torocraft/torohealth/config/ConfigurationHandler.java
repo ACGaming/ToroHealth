@@ -22,6 +22,7 @@ public class ConfigurationHandler {
   public static Integer healColor;
   public static Float displayRange;
   public static int hideDelay;
+  public static boolean showBosses;
 
   private static String[] acceptedColors = new String[]{"RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "WHITE", "BLACK", "PURPLE"};
 
@@ -44,6 +45,7 @@ public class ConfigurationHandler {
       healColor = mapColor(config.getString("Heal Color", Configuration.CATEGORY_CLIENT, "GREEN", "Heal Text Color", acceptedColors));
       damageColor = mapColor(config.getString("Damage Color", Configuration.CATEGORY_CLIENT, "RED", "Damage Text Color", acceptedColors));
       displayRange = config.getFloat("Display Range", Configuration.CATEGORY_CLIENT, 50F, 0F, Float.MAX_VALUE, "The maximum range for entity information displays");
+      showBosses = config.getBoolean("Show Bosses", Configuration.CATEGORY_CLIENT, false, "Shows health bars even for bosses with their own boss bar");
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
