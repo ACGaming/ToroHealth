@@ -23,7 +23,7 @@ public class ConfigurationHandler {
   public static Float displayRange;
   public static int hideDelay;
   public static boolean showBosses;
-
+  public static String[] disabledEntities = new String[]{"com.Fishmod.mod_LavaCow.entities.tameable.EntityMimic"};
   private static String[] acceptedColors = new String[]{"RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "WHITE", "BLACK", "PURPLE"};
 
   public static void init(File configFile) {
@@ -46,6 +46,7 @@ public class ConfigurationHandler {
       damageColor = mapColor(config.getString("Damage Color", Configuration.CATEGORY_CLIENT, "RED", "Damage Text Color", acceptedColors));
       displayRange = config.getFloat("Display Range", Configuration.CATEGORY_CLIENT, 50F, 0F, Float.MAX_VALUE, "The maximum range for entity information displays");
       showBosses = config.getBoolean("Show Bosses", Configuration.CATEGORY_CLIENT, false, "Shows health bars even for bosses with their own boss bar");
+      disabledEntities = config.getStringList("Disabled Entities", Configuration.CATEGORY_CLIENT, disabledEntities, "List of entities (by class name) to disable health bars for");
     } catch (Exception e) {
       e.printStackTrace();
     } finally {

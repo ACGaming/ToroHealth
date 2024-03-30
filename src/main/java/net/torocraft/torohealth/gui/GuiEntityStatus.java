@@ -14,6 +14,7 @@ import net.torocraft.torohealth.ToroHealth;
 import net.torocraft.torohealth.config.ConfigurationHandler;
 import net.torocraft.torohealth.display.*;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -75,6 +76,10 @@ public class GuiEntityStatus extends Gui {
           }
         }
       }
+    }
+
+    if (Arrays.asList(ConfigurationHandler.disabledEntities).contains(entity.getClass().getName())) {
+      return;
     }
 
     updatePositions();
